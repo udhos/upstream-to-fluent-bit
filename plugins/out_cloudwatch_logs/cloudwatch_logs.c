@@ -91,6 +91,11 @@ static int cb_cloudwatch_init(struct flb_output_instance *ins,
         goto error;
     }
 
+    tmp = flb_output_get_property("log_group_class", ins);
+    if (tmp) {
+        ctx->log_group_class = tmp;
+    }
+
     tmp = flb_output_get_property("log_stream_name", ins);
     if (tmp) {
         ctx->log_stream_name = tmp;
@@ -549,6 +554,12 @@ static struct flb_config_map config_map[] = {
      FLB_CONFIG_MAP_STR, "log_group_name", NULL,
      0, FLB_FALSE, 0,
      "CloudWatch Log Group Name"
+    },
+
+    {
+     FLB_CONFIG_MAP_STR, "log_group_class", NULL,
+     0, FLB_FALSE, 0,
+     "CloudWatch Log Group Class; can be 'STANDARD' or 'INFREQUENT_ACCES'."
     },
 
     {
