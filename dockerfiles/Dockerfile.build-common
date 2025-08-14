@@ -11,7 +11,7 @@ RUN mkdir -p /fluent-bit/bin /fluent-bit/etc /fluent-bit/log
 ENV HOME /home
 
 # Configuration files
-COPY fluent-bit.conf \
+COPY ./configs/fluent-bit.conf \
      /fluent-bit/etc/
 
 # Add parsers files

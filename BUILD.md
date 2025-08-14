@@ -1,5 +1,7 @@
 # Build
 
+See ./Build.sh
+
 ```bash
 AL_TAG=2
 DOCKER_BUILD_FLAGS=--no-cache
