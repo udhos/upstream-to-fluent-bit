@@ -1632,7 +1632,7 @@ int create_log_group(struct flb_cloudwatch *ctx, struct log_stream *stream)
     /* construct CreateLogGroup request body */
 
     if (ctx->log_group_class) {
-        tmp = flb_sds_printf(&body, "{\"logGroupName\":\"%s\",\"tags\":{\"logGroupClass\":\"%s\"}}",
+        tmp = flb_sds_printf(&body, "{\"logGroupName\":\"%s\",\"logGroupClass\":\"%s\"}",
                              stream->group, group_class);
     } else {
         tmp = flb_sds_printf(&body, "{\"logGroupName\":\"%s\"}", stream->group);
