@@ -13,3 +13,16 @@ docker build $(DOCKER_BUILD_FLAGS) --build-arg AL_TAG=${AL_TAG} --build-arg FLB_
 
 docker build $(DOCKER_BUILD_FLAGS) --build-arg BUILD_IMAGE=amazon/aws-for-fluent-bit:build-common-al${AL_TAG} -t amazon/aws-for-fluent-bit:compile-al${AL_TAG} -f ./dockerfiles/Dockerfile.compile .
 ```
+
+Get fluent-bit binary
+
+```bash
+$ docker run -v $PWD:/pwd --rm -ti docker.io/amazon/aws-for-fluent-bit:compile-al2 sh
+sh-4.2# cp /fluent-bit/bin/fluent-bit /pwd
+sh-4.2# 
+sh-4.2# 
+sh-4.2# exit
+exit
+$ 
+$ gzip fluent-bit
+```
