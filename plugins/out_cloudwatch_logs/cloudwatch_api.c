@@ -1612,8 +1612,15 @@ int create_log_group(struct flb_cloudwatch *ctx, struct log_stream *stream)
     flb_sds_t tmp;
     flb_sds_t error;
     int ret;
+    const char *group_class = "";
 
-    flb_plg_info(ctx->ins, "Creating log group %s", stream->group);
+    if (ctx->log_group_class) {
+        /* use the class from the context */
+        group_class = ctx->log_group_class;
+    }
+
+    flb_plg_info(ctx->ins, "Creating log group %s with class '%s'", stream->group,
+        group_class);
 
     body = flb_sds_create_size(25 + strlen(stream->group));
     if (!body) {
@@ -1623,7 +1630,13 @@ int create_log_group(struct flb_cloudwatch *ctx, struct log_stream *stream)
     }
 
     /* construct CreateLogGroup request body */
-    tmp = flb_sds_printf(&body, "{\"logGroupName\":\"%s\"}", stream->group);
+
+    if (ctx->log_group_class) {
+        tmp = flb_sds_printf(&body, "{\"logGroupName\":\"%s\",\"tags\":{\"logGroupClass\":\"%s\"}}",
+                             stream->group, group_class);
+    } else {
+        tmp = flb_sds_printf(&body, "{\"logGroupName\":\"%s\"}", stream->group);
+    }
     if (!tmp) {
         flb_sds_destroy(body);
         flb_errno();
